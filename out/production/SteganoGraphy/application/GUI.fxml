@@ -4,20 +4,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="245.0" prefWidth="634.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MyController">
+<BorderPane prefHeight="245.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MyController">
    <center>
-       <AnchorPane prefHeight="325.0" prefWidth="634.0" BorderPane.alignment="CENTER">
+       <AnchorPane prefHeight="216.0" prefWidth="697.0" BorderPane.alignment="CENTER">
            <Button fx:id="encodeButton" disable="true" layoutX="124.0" layoutY="151.0" mnemonicParsing="false" onAction="#encodeButtonClick" text="Encode" />
            <TextField fx:id="encodeTextField" layoutX="71.0" layoutY="115.0" />
            <Label layoutX="71.0" layoutY="96.0" text="Enter text to encode" />
-           <Button layoutX="417.0" layoutY="115.0" mnemonicParsing="false" onAction="#decodeButtonClick" text="Decode" />
-           <Label fx:id="decodedTextLabel" alignment="CENTER" layoutX="381.0" layoutY="156.0" prefHeight="16.0" prefWidth="141.0" text="Decoded text" />
-           <Label fx:id="instructionLabel" layoutX="55.0" layoutY="32.0" prefHeight="21.0" prefWidth="296.0" text="Load your JPEG picture">
+           <Button layoutX="521.0" layoutY="118.0" mnemonicParsing="false" onAction="#decodeButtonClick" text="Decode" />
+           <Label fx:id="decodedTextLabel" alignment="CENTER" layoutX="485.0" layoutY="159.0" prefHeight="16.0" prefWidth="141.0" text="Decoded text" />
+           <Label fx:id="instructionLabel" layoutX="57.0" layoutY="36.0" prefHeight="21.0" prefWidth="296.0" text="Load your JPEG picture">
               <font>
                   <Font name="System Bold" size="18.0" />
               </font>
            </Label>
-           <Button fx:id="showPictureButton" disable="true" layoutX="400.0" layoutY="30.0" mnemonicParsing="false" onAction="#showPictureButtonClick" text="Show Picture" />
+           <Button fx:id="showOrigPicButton" disable="true" layoutX="477.0" layoutY="33.0" mnemonicParsing="false" onAction="#showOrigPicButtonClick" text="Show Original Picture" />
+         <Button fx:id="showEditedPicButton" disable="true" layoutX="482.0" layoutY="73.0" mnemonicParsing="false" onAction="#showEditedPicButtonClick" text="Show Edited Picture" />
        </AnchorPane>
    </center>
    <top>

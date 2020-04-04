@@ -1,6 +1,7 @@
 package application;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -29,14 +30,16 @@ public class MyController {
     private Label instructionLabel;
 
     @FXML
-    private Button showPictureButton;
+    private Button showOrigPicButton;
+    @FXML
+    private Button showEditedPicButton;
     @FXML
     private Button encodeButton;
 
     @FXML
     private TextField encodeTextField;
 
-    BufferedImage originalImage;
+    private BufferedImage originalImage;
 
     // ----------------opening new window when pressed About---------------------
     @FXML
@@ -65,18 +68,18 @@ public class MyController {
             if (fileAsString.contains(".jpg") || fileAsString.contains(".jpeg")) { // kontrola ci je vybraty subor JPG
                 originalImage = ImageIO.read(new File(fileAsString));
                 instructionLabel.setText("Picture was loaded!");
-                showPictureButton.setDisable(false);
+                showOrigPicButton.setDisable(false);
                 encodeButton.setDisable(false);
             } else {
                 instructionLabel.setText("Wrong file type was chosen!");
-                showPictureButton.setDisable(true);
+                showOrigPicButton.setDisable(true);
                 encodeButton.setDisable(true);
 
             }
 
         } else {
             instructionLabel.setText("No file was chosen!");
-            showPictureButton.setDisable(true);
+            showOrigPicButton.setDisable(true);
             encodeButton.setDisable(true);
         }
 
@@ -90,20 +93,38 @@ public class MyController {
     @FXML
     void encodeButtonClick() {
 
-        TxTProcessing processedTxt = new TxTProcessing();
-        processedTxt.changeTextToBinary(encodeTextField.getText()); // TODO pass this argument to process
+        TxTProcessing processedTxt = new TxTProcessing(originalImage);
+        if (processedTxt.controlOfPictureLength(encodeTextField.getText())) {        // check if the picture is big enough for message
 
-        ImageProcessing imageProcessing = new ImageProcessing(originalImage);
-        imageProcessing.showRGBValues();
+            String msgToEncode = processedTxt.changeTextToBinary(encodeTextField.getText());
+            ImageProcessing imageProcessing = new ImageProcessing(originalImage);
 
+            imageProcessing.showRedValues();
+
+            imageProcessing.outputChangedPixel(0, 0, msgToEncode);
+            imageProcessing.outputChangedPixel(0, 0, msgToEncode);
+
+//            imageProcessing.showRedValues();
+
+            //   imageProcessing.setRedValuesOfPicture();
+
+
+            showEditedPicButton.setDisable(false);
+            instructionLabel.setText("Encoding was successful!");
+        } else {
+            instructionLabel.setText("Message is too long for picture!");
+        }
 
 
     }
 
-    // ----------------Showing the picture when pressed button Show Picture------
     @FXML
-    void showPictureButtonClick() {
-        Image card = SwingFXUtils.toFXImage(originalImage, null);
+    void showOrigPicButtonClick() {
+        showImg(originalImage);
+    }
+
+    private void showImg(BufferedImage imgToShow) {
+        Image card = SwingFXUtils.toFXImage(imgToShow, null);
         ImageView imageView = new ImageView(card);
         Stage stage = new Stage();
         Group root = new Group(imageView);
@@ -112,6 +133,10 @@ public class MyController {
         stage.setTitle("Loaded image");
         stage.setScene(scene);
         stage.show();
-    }
+    }       // method to show BufferedImage object
 
+    public void showEditedPicButtonClick(ActionEvent actionEvent) {
+        ImageProcessing imageProcessing = new ImageProcessing(originalImage);
+        showImg(imageProcessing.setRedValuesOfPicture());
+    }
 }
