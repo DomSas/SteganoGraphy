@@ -39,6 +39,7 @@ public class MyController {
     @FXML
     private TextField encodeTextField;
 
+    private BufferedImage imageToEdit;
     private BufferedImage originalImage;
 
     // ----------------opening new window when pressed About---------------------
@@ -66,6 +67,7 @@ public class MyController {
 //			System.out.println(fileAsString); // vypis PATH ku vybranemu suboru
 
             if (fileAsString.contains(".jpg") || fileAsString.contains(".jpeg")) { // kontrola ci je vybraty subor JPG
+                imageToEdit = ImageIO.read(new File(fileAsString));
                 originalImage = ImageIO.read(new File(fileAsString));
                 instructionLabel.setText("Picture was loaded!");
                 showOrigPicButton.setDisable(false);
@@ -93,20 +95,19 @@ public class MyController {
     @FXML
     void encodeButtonClick() {
 
-        TxTProcessing processedTxt = new TxTProcessing(originalImage);
+        TxTProcessing processedTxt = new TxTProcessing(imageToEdit);
         if (processedTxt.controlOfPictureLength(encodeTextField.getText())) {        // check if the picture is big enough for message
 
             String msgToEncode = processedTxt.changeTextToBinary(encodeTextField.getText());
-            ImageProcessing imageProcessing = new ImageProcessing(originalImage);
+            ImageProcessing imageProcessing = new ImageProcessing(imageToEdit);
 
             imageProcessing.showRedValues();
 
-            imageProcessing.outputChangedPixel(0, 0, msgToEncode);
-            imageProcessing.outputChangedPixel(0, 0, msgToEncode);
+            imageProcessing.showRedValues();
 
-//            imageProcessing.showRedValues();
+            imageProcessing.setRedValuesOfPicture(processedTxt.changeTextToBinary(encodeTextField.getText()));
 
-            //   imageProcessing.setRedValuesOfPicture();
+            imageProcessing.showRedValues();
 
 
             showEditedPicButton.setDisable(false);
@@ -136,7 +137,9 @@ public class MyController {
     }       // method to show BufferedImage object
 
     public void showEditedPicButtonClick(ActionEvent actionEvent) {
-        ImageProcessing imageProcessing = new ImageProcessing(originalImage);
-        showImg(imageProcessing.setRedValuesOfPicture());
+        ImageProcessing imageProcessing = new ImageProcessing(imageToEdit);
+        TxTProcessing processedTxt = new TxTProcessing(imageToEdit);
+
+        showImg(imageProcessing.setRedValuesOfPicture(processedTxt.changeTextToBinary(encodeTextField.getText())));
     }
 }

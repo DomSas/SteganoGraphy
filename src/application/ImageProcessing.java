@@ -37,12 +37,13 @@ public class ImageProcessing {
     }
 
     // create a final image with message encoded inside
-    public BufferedImage setRedValuesOfPicture() {
+    public BufferedImage setRedValuesOfPicture(String msgToEncode) {
 
         for (int i = 0; i < widthOfPic; i++) {
             for (int j = 0; j < heightOfPic; j++) {
-                int r = 22;
-                int g = new Color(processedImg.getRGB(i, j)).getGreen();
+                int r = outputChangedPixel(i, j, msgToEncode);
+//                int g = new Color(processedImg.getRGB(i, j)).getGreen();
+                int g = 0;
                 int b = new Color(processedImg.getRGB(i, j)).getBlue();
                 int a = new Color(processedImg.getRGB(i, j)).getAlpha();
                 int col = (a << 24) | (r << 16) | (g << 8) | b;
@@ -58,24 +59,23 @@ public class ImageProcessing {
     public int outputChangedPixel(int x, int y, String msgToEncode) {
 
         int a = new Color(processedImg.getRGB(x, y)).getRed();
-        String b = Integer.toString(a, 2);
-        System.out.println(b.charAt(b.length() - 1));
-        System.out.println(msgToEncode.charAt(numOfPixel));
+        String b = Integer.toString(a, 2);                          // changing decimal pixel value to binary
+//        System.out.println(b);
+//        System.out.println(msgToEncode.charAt(numOfPixel));
 
-        if (b.charAt(b.length() - 1) == msgToEncode.charAt(numOfPixel)) {   //check if LSB is equal to bit in messahe
-            System.out.println("rovnaju sa");
+        if (numOfPixel == msgToEncode.length() - 1) {                      // checks if we are not in the end of message to encrypt
             return a;
-        } else {    //if not, change the LSB in picture
-            System.out.println("tu som");
-            b = b.substring(0, (b.length() - 1) + msgToEncode.charAt(numOfPixel));
+        }
+        if (!b.endsWith(String.valueOf(msgToEncode.charAt(numOfPixel)))) {      // check if LSB is not equal to current encoded bit, if yes, it changes it
+            b = b.substring(0, b.length() - 1) + msgToEncode.charAt(numOfPixel);
         }
 
-        System.out.println();
-        System.out.println(b.charAt(b.length() - 1));
-        System.out.println(msgToEncode.charAt(numOfPixel));
 
-        numOfPixel++;
-        return 0;
+        int returnedPixelValue = Integer.parseInt(b, 2);             // changing binary back to decimal
+
+        numOfPixel++;                   // increasing position in encrypted message to right
+        //TODO osetrit koniec stringu ktory sa ma zakodovat
+        return returnedPixelValue;
     }
 
 
