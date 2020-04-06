@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -35,6 +36,8 @@ public class MyController {
     private Button showEditedPicButton;
     @FXML
     private Button encodeButton;
+    @FXML
+    private Button saveEditedPicButton;
 
     @FXML
     private TextField encodeTextField;
@@ -64,9 +67,8 @@ public class MyController {
         File file = fileChooser.showOpenDialog(stage2);
         if (file != null) {
             String fileAsString = file.toString();
-//			System.out.println(fileAsString); // vypis PATH ku vybranemu suboru
 
-            if (fileAsString.contains(".jpg") || fileAsString.contains(".jpeg")) { // kontrola ci je vybraty subor JPG
+            if (fileAsString.contains(".png")) { // checks if the chosen file is .PNG
                 imageToEdit = ImageIO.read(new File(fileAsString));
                 originalImage = ImageIO.read(new File(fileAsString));
                 instructionLabel.setText("Picture was loaded!");
@@ -96,32 +98,70 @@ public class MyController {
     void encodeButtonClick() {
 
         TxTProcessing processedTxt = new TxTProcessing(imageToEdit);
-        if (processedTxt.controlOfPictureLength(encodeTextField.getText())) {        // check if the picture is big enough for message
+        if (encodeTextField.getText().isEmpty()){
+            instructionLabel.setText("No message insterted!");
+        } else if (processedTxt.controlOfPictureLength(encodeTextField.getText())) {        // check if the picture is big enough for message
 
             String msgToEncode = processedTxt.changeTextToBinary(encodeTextField.getText());
             ImageProcessing imageProcessing = new ImageProcessing(imageToEdit);
 
             imageProcessing.showRedValues();
-
             imageProcessing.showRedValues();
 
-            imageProcessing.setRedValuesOfPicture(processedTxt.changeTextToBinary(encodeTextField.getText()));
+            this.imageToEdit = imageProcessing.setRedValuesOfPicture(processedTxt.changeTextToBinary(encodeTextField.getText()));
 
             imageProcessing.showRedValues();
-
 
             showEditedPicButton.setDisable(false);
             instructionLabel.setText("Encoding was successful!");
+            saveEditedPicButton.setDisable(false);
         } else {
             instructionLabel.setText("Message is too long for picture!");
         }
-
 
     }
 
     @FXML
     void showOrigPicButtonClick() {
         showImg(originalImage);
+        ImageProcessing imageProcessing = new ImageProcessing(originalImage);
+
+        imageProcessing.showRedValues();
+
+    }
+
+    @FXML
+    public void showEditedPicButtonClick(ActionEvent actionEvent) {
+        ImageProcessing imageProcessing = new ImageProcessing(imageToEdit);
+        TxTProcessing processedTxt = new TxTProcessing(imageToEdit);
+
+        showImg(imageProcessing.setRedValuesOfPicture(processedTxt.changeTextToBinary(encodeTextField.getText())));
+    }
+
+    @FXML
+    public void saveEditedPictureButtonClick() {
+
+        Stage stage = new Stage();
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(stage);
+
+        if (selectedDirectory == null) {
+            instructionLabel.setText("Directory was not chosen!");
+        } else {
+
+            BufferedImage bi = imageToEdit;
+            File outputFile = new File(selectedDirectory.getAbsolutePath() + "/encoded.png");
+            System.out.println(outputFile);
+            System.out.println(selectedDirectory.getAbsolutePath());
+            try {
+                ImageIO.write(bi, "png", outputFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            instructionLabel.setText("File was saved!");
+        }
+
+
     }
 
     private void showImg(BufferedImage imgToShow) {
@@ -136,10 +176,4 @@ public class MyController {
         stage.show();
     }       // method to show BufferedImage object
 
-    public void showEditedPicButtonClick(ActionEvent actionEvent) {
-        ImageProcessing imageProcessing = new ImageProcessing(imageToEdit);
-        TxTProcessing processedTxt = new TxTProcessing(imageToEdit);
-
-        showImg(imageProcessing.setRedValuesOfPicture(processedTxt.changeTextToBinary(encodeTextField.getText())));
-    }
 }

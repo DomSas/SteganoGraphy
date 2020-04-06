@@ -37,13 +37,13 @@ public class ImageProcessing {
     }
 
     // create a final image with message encoded inside
+//    TODO dokoncit posunutie o 16 pozisii na pridanie Y a dlzky spravy
     public BufferedImage setRedValuesOfPicture(String msgToEncode) {
 
         for (int i = 0; i < widthOfPic; i++) {
             for (int j = 0; j < heightOfPic; j++) {
                 int r = outputChangedPixel(i, j, msgToEncode);
-//                int g = new Color(processedImg.getRGB(i, j)).getGreen();
-                int g = 0;
+                int g = new Color(processedImg.getRGB(i, j)).getGreen();
                 int b = new Color(processedImg.getRGB(i, j)).getBlue();
                 int a = new Color(processedImg.getRGB(i, j)).getAlpha();
                 int col = (a << 24) | (r << 16) | (g << 8) | b;
