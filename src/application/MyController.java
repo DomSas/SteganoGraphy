@@ -1,7 +1,6 @@
 package application;
 
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -37,6 +36,8 @@ public class MyController {
     @FXML
     private Button encodeButton;
     @FXML
+    private Button decodeButton;
+    @FXML
     private Button saveEditedPicButton;
 
     @FXML
@@ -44,6 +45,7 @@ public class MyController {
 
     private BufferedImage imageToEdit;
     private BufferedImage originalImage;
+
 
     // ----------------opening new window when pressed About---------------------
     @FXML
@@ -74,10 +76,12 @@ public class MyController {
                 instructionLabel.setText("Picture was loaded!");
                 showOrigPicButton.setDisable(false);
                 encodeButton.setDisable(false);
+                decodeButton.setDisable(false);
             } else {
                 instructionLabel.setText("Wrong file type was chosen!");
                 showOrigPicButton.setDisable(true);
                 encodeButton.setDisable(true);
+                decodeButton.setDisable(true);
 
             }
 
@@ -85,12 +89,8 @@ public class MyController {
             instructionLabel.setText("No file was chosen!");
             showOrigPicButton.setDisable(true);
             encodeButton.setDisable(true);
+            decodeButton.setDisable(true);
         }
-
-    }
-
-    @FXML
-    void decodeButtonClick() {
 
     }
 
@@ -98,7 +98,7 @@ public class MyController {
     void encodeButtonClick() {
 
         TxTProcessing processedTxt = new TxTProcessing(imageToEdit);
-        if (encodeTextField.getText().isEmpty()){
+        if (encodeTextField.getText().isEmpty()) {
             instructionLabel.setText("No message insterted!");
         } else if (processedTxt.controlOfPictureLength(encodeTextField.getText())) {        // check if the picture is big enough for message
 
@@ -116,7 +116,7 @@ public class MyController {
             instructionLabel.setText("Encoding was successful!");
             saveEditedPicButton.setDisable(false);
         } else {
-            instructionLabel.setText("Message is too long for picture!");
+            instructionLabel.setText("Message is too long!");
         }
 
     }
@@ -131,7 +131,7 @@ public class MyController {
     }
 
     @FXML
-    public void showEditedPicButtonClick(ActionEvent actionEvent) {
+    public void showEditedPicButtonClick() {
         ImageProcessing imageProcessing = new ImageProcessing(imageToEdit);
         TxTProcessing processedTxt = new TxTProcessing(imageToEdit);
 
@@ -163,6 +163,21 @@ public class MyController {
 
 
     }
+
+    @FXML
+    public void decodeButtonClick() {
+        ImageProcessing imageProcessing = new ImageProcessing(originalImage);
+        imageProcessing.showRedValues();
+        imageProcessing.showRedValuesAsString();
+
+        if (imageProcessing.containsMessage() == 0) {
+            instructionLabel.setText("No message in picture!");
+        } else {
+            decodedTextLabel.setText(imageProcessing.decodeText(imageProcessing.containsMessage()));
+        }
+
+    }
+
 
     private void showImg(BufferedImage imgToShow) {
         Image card = SwingFXUtils.toFXImage(imgToShow, null);

@@ -12,6 +12,7 @@ public class ImageProcessing {
     String msgToEncode;
     String[][] redValuesOfPicture;
     int numOfPixel = 0;
+    StringBuilder valuesAsString = new StringBuilder();
 
     public ImageProcessing(BufferedImage processedImg) {
         super();
@@ -30,14 +31,13 @@ public class ImageProcessing {
             for (int j = 0; j < heightOfPic; j++) {
                 int a = new Color(processedImg.getRGB(i, j)).getRed();
                 String b = Integer.toString(a, 2);                               // changing hexadecimal to binary
-                redValuesOfPicture[i][j] = b;        // taking just last bit of red value and add to array
+                redValuesOfPicture[i][j] = b;        // taking just red binary value and add to array
             }
         }
         System.out.println(Arrays.deepToString(redValuesOfPicture));           // printing binary array
     }
 
     // create a final image with message encoded inside
-//    TODO dokoncit posunutie o 16 pozisii na pridanie Y a dlzky spravy
     public BufferedImage setRedValuesOfPicture(String msgToEncode) {
 
         for (int i = 0; i < widthOfPic; i++) {
@@ -63,7 +63,7 @@ public class ImageProcessing {
 //        System.out.println(b);
 //        System.out.println(msgToEncode.charAt(numOfPixel));
 
-        if (numOfPixel == msgToEncode.length() - 1) {                      // checks if we are not in the end of message to encrypt
+        if (numOfPixel > msgToEncode.length() - 1) {                      // checks if we are not in the end of message to encrypt
             return a;
         }
         if (!b.endsWith(String.valueOf(msgToEncode.charAt(numOfPixel)))) {      // check if LSB is not equal to current encoded bit, if yes, it changes it
@@ -74,9 +74,49 @@ public class ImageProcessing {
         int returnedPixelValue = Integer.parseInt(b, 2);             // changing binary back to decimal
 
         numOfPixel++;                   // increasing position in encrypted message to right
-        //TODO osetrit koniec stringu ktory sa ma zakodovat
         return returnedPixelValue;
     }
 
+
+    public void showRedValuesAsString() {
+
+        StringBuilder valuesAsString = new StringBuilder();
+
+        for (int i = 0; i < widthOfPic; i++) {
+            for (int j = 0; j < heightOfPic; j++) {
+                int a = new Color(processedImg.getRGB(i, j)).getRed();
+                String b = Integer.toString(a, 2);
+                this.valuesAsString = valuesAsString.append(String.valueOf(b.charAt(b.length() - 1)));
+            }
+        }
+        System.out.println(valuesAsString);
+    }
+
+    public int containsMessage() {
+
+        if (valuesAsString.substring(0, 8).equals("01111001")) { // if message contains y in the beginning, read how long is message
+            System.out.println(valuesAsString.substring(8, 24));
+            return Integer.parseInt(valuesAsString.substring(8, 24), 2);
+        }
+        return 0;
+    }
+
+    public String decodeText(int lenghtOfMessage) {
+
+        String s = valuesAsString.substring(24, lenghtOfMessage + 25);
+        System.out.println(s);
+        String str = "";
+
+        for (int i = 0; i < s.length() / 8; i++) {
+
+            int a = Integer.parseInt(s.substring(8 * i, (i + 1) * 8), 2);
+            str += (char) (a);
+        }
+
+        System.out.println(str);
+
+
+        return str;
+    }
 
 }

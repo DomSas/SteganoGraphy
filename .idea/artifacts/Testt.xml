@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="Testt">
+    <output-path>$PROJECT_DIR$/out/artifacts/Testt</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="application.Exec" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="SteganoGraphy.jar">
+        <element id="module-output" name="SteganoGraphy" />
+      </element>
+    </root>
+  </artifact>
+</component>
