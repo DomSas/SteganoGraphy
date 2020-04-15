@@ -1,6 +1,6 @@
 # `Steganography`
 
-This program encrypts message to PNG image and decrypts it back.
+This program encrypts message to PNG image and decrypts it back. It uses JAVAFX with JDK 1.8.
 
 **How it works – encoding:**
 
