@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="javafx" name="Testt">
-    <output-path>$PROJECT_DIR$/out/artifacts/Testt</output-path>
+  <artifact type="javafx" name="Test">
+    <output-path>$PROJECT_DIR$/out/artifacts/Test</output-path>
     <properties id="javafx-properties">
       <options>
         <option name="appClass" value="application.Exec" />
