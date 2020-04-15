@@ -56,7 +56,7 @@ public class MyController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setOpacity(1);
         stage.setTitle("About");
-        stage.setScene(new Scene(root, 450, 450));
+        stage.setScene(new Scene(root, 320, 370));
         stage.showAndWait();
     }
 
@@ -64,7 +64,7 @@ public class MyController {
     void loadNewImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         Stage stage2 = new Stage();
-        fileChooser.setInitialDirectory(new File("/home/dom/Desktop/JAVA")); // TODO potom vymazat
+   //     fileChooser.setInitialDirectory(new File("/home/dom/Desktop/JAVA")); // TODO potom vymazat
         fileChooser.setTitle("Open a JPEG picture to encode");
         File file = fileChooser.showOpenDialog(stage2);
         if (file != null) {
@@ -151,8 +151,8 @@ public class MyController {
 
             BufferedImage bi = imageToEdit;
             File outputFile = new File(selectedDirectory.getAbsolutePath() + "/encoded.png");
-            System.out.println(outputFile);
-            System.out.println(selectedDirectory.getAbsolutePath());
+//            System.out.println(outputFile);
+//            System.out.println(selectedDirectory.getAbsolutePath());
             try {
                 ImageIO.write(bi, "png", outputFile);
             } catch (IOException e) {
@@ -174,6 +174,7 @@ public class MyController {
             instructionLabel.setText("No message in picture!");
         } else {
             decodedTextLabel.setText(imageProcessing.decodeText(imageProcessing.containsMessage()));
+            instructionLabel.setText("Decoding successful!");
         }
 
     }

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/8.0.241">
+<BorderPane prefHeight="350.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <Label layoutX="14.0" layoutY="14.0" prefHeight="16.0" prefWidth="106.0" text="Steganography"/>
-         <Label alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="39.0" prefHeight="69.0"
-                prefWidth="177.0" text="Info about this program...version 1.0"/>
+      <AnchorPane prefHeight="281.0" prefWidth="316.0" BorderPane.alignment="CENTER">
+         <Label layoutX="14.0" layoutY="14.0" prefHeight="16.0" prefWidth="126.0" text="Steganography">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font></Label>
+         <Label alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="42.0" prefHeight="303.0" prefWidth="290.0" text="Version of program: 1.0 &#10;&#10;Load a &quot;.png&quot; image format and write message to encode. &#10;After successful encoding, you can save your image.&#10;If the picture is too small for your message or you do not write any message, warning message will be shown.&#10;&#10;To decode a message, load &quot;.png&quot; image and click the decode button.&#10;If the image does not contain any message, the program will tell you about it.&#10;&#10;&#10;Creator: Dominik Sasko&#10;Date: 3/2020" wrapText="true" />
       </AnchorPane>
    </center>
 </BorderPane>

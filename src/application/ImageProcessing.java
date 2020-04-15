@@ -34,7 +34,7 @@ public class ImageProcessing {
                 redValuesOfPicture[i][j] = b;        // taking just red binary value and add to array
             }
         }
-        System.out.println(Arrays.deepToString(redValuesOfPicture));           // printing binary array
+//        System.out.println(Arrays.deepToString(redValuesOfPicture));           // printing binary array
     }
 
     // create a final image with message encoded inside
@@ -89,13 +89,13 @@ public class ImageProcessing {
                 this.valuesAsString = valuesAsString.append(String.valueOf(b.charAt(b.length() - 1)));
             }
         }
-        System.out.println(valuesAsString);
+//        System.out.println(valuesAsString);
     }
 
     public int containsMessage() {
 
         if (valuesAsString.substring(0, 8).equals("01111001")) { // if message contains y in the beginning, read how long is message
-            System.out.println(valuesAsString.substring(8, 24));
+//            System.out.println(valuesAsString.substring(8, 24));
             return Integer.parseInt(valuesAsString.substring(8, 24), 2);
         }
         return 0;
@@ -104,7 +104,7 @@ public class ImageProcessing {
     public String decodeText(int lenghtOfMessage) {
 
         String s = valuesAsString.substring(24, lenghtOfMessage + 25);
-        System.out.println(s);
+//        System.out.println(s);
         String str = "";
 
         for (int i = 0; i < s.length() / 8; i++) {
@@ -113,7 +113,7 @@ public class ImageProcessing {
             str += (char) (a);
         }
 
-        System.out.println(str);
+//        System.out.println(str);
 
 
         return str;

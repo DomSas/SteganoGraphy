@@ -23,7 +23,7 @@ public class TxTProcessing {        //changing text into binary
             }
 //            binary.append(' ');
         }
-        System.out.println("'" + inputText + "' to binary: " + binary);
+//        System.out.println("'" + inputText + "' to binary: " + binary);
 
         //adding "y" to beginning of file to show there is something encoded + added length of message
         // both in binary
