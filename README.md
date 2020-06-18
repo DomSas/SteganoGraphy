@@ -1,10 +1,10 @@
 # `Steganography`
 
-This program encrypts message to PNG image and decrypts it back. It uses JAVAFX with JDK 1.8.
+This program encrypts a text message into a PNG image and decrypts it back. It uses JAVAFX with JDK 1.8.
 
 **How it works – encoding:**
 
-1. Message which is being encoded is changed to binary form.
+1. Text message which is being encoded is changed to binary form.
 2. Program uses LSB (least significant bit) from PNG image and
 substitutes those bits with user's message.
 3. First 8 bits will change to letter "Y" in binary after successful
